@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Print</title>
+</head>
+<body>
+
+  <div id="capture-2">
+    <canvas id="myChart"></canvas>
+  </div>
+
+
+  <div id="capture" style="padding: 10px; background: #f5da55">
+    <!-- <h4 style="color: #000; ">Hello world!</h4> -->
+    <img src="./run.png" alt="" srcset="">
+ </div>
+
+ <button id="btn">Print</button>
+ <button id="btn-print-2">Print 2</button>
+
+
+ <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+ <script src="./html2canvas.min.js"></script>
+
+ <script>
+   var ctx = document.getElementById('myChart').getContext('2d');
+   var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'line',
+
+    // The data for our dataset
+    data: {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        datasets: [{
+            label: 'My First dataset',
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: [0, 10, 5, 2, 20, 30, 45]
+        }]
+    },
+
+    // Configuration options go here
+    options: {}
+});
+
+   const btn = document.querySelector('#btn');
+   const btnPrintChart = document.querySelector('#btn-print-2');
+
+
+   btn.addEventListener('click', useCanvas);
+   btnPrintChart.addEventListener('click', printChart);
+
+
+   function useCanvas(){
+    html2canvas(document.querySelector("#capture"), {
+        backgroundColor: '#fff',
+      }).then(canvas => {
+        // var myImage = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+        // console.log(myImage);
+        // myImage.download = 'teste.jpg';
+        // window.location.href = myImage;
+
+        var a = document.createElement('a');
+        // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
+        a.href = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
+        a.width
+        a.download = 'teste.jpg';
+        a.click();
+      });
+   }
+
+   function printChart(){
+    html2canvas(document.querySelector("#capture-2"), {
+        backgroundColor: '#fff',
+      }).then(canvas => {
+        // var myImage = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+        // console.log(myImage);
+        // myImage.download = 'teste.jpg';
+        // window.location.href = myImage;
+
+        var a = document.createElement('a');
+        // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
+        a.href = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
+        a.width
+        a.download = 'teste.jpg';
+        a.click();
+      });
+   }
+
+  //  const capture = async () => { const canvas = document.createElement("canvas"); const context = canvas.getContext("2d"); const video = document.createElement("video"); try { const captureStream = await navigator.mediaDevices.getDisplayMedia(); video.srcObject = captureStream; context.drawImage(video, 0, 0, window.width, window.height); const frame = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream"); captureStream.getTracks().forEach(track => track.stop()); window.location.href = frame; } catch (err) { console.error("Error: " + err); } }; capture();
+
+  //  html2canvas(document.querySelector("#capture")).then(canvas => {
+  //   document.body.appendChild(canvas)
+  //  });
+ </script>
+
+ <style>
+   #btn{
+     width: 100px;
+     height: 50px;
+   }
+
+   #capture {
+     width: 50%;
+     margin: auto;
+   }
+
+   #capture-2 {
+     width: 50%;
+     margin: auto;
+   }
+
+   img{
+     width: 100%;
+   }
+ </style>
+
+</body>
+</html>
